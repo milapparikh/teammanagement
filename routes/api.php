@@ -23,6 +23,10 @@ Route::group(['middleware' => ['auth:api']], function(){	//Only for loggedin use
 		Route::post('createteam', 'API\TeamController@store');
 	});
 
+	Route::group(['middleware' => ['adminauth']], function(){	//Only for admin users
+		Route::get('getTeamInfo', 'API\TeamController@viewdetails');
+	});
+
 });
 
 /*

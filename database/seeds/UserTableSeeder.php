@@ -14,8 +14,17 @@ class UserTableSeeder extends Seeder
      */
     public function run()
     {
+        $admin = Role::where('name', 'adminmanager')->first();
         $team_owner = Role::where('name', 'teamowner')->first();
 		$player = Role::where('name', 'player')->first();
+
+		$ousers = new User();
+        $ousers->role_id = $admin->id;
+	    $ousers->name = 'admin';
+	    $ousers->email = 'admin@gmail.com';
+	    $ousers->password = bcrypt('Admin@123');
+	    $ousers->save();
+        unset($ousers);
 
 		$ousers = new User();
         $ousers->role_id = $team_owner->id;
