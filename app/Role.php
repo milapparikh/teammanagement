@@ -13,17 +13,18 @@ class Role extends Model {
     /**
      * The attributes that are mass assignable.
      *
-     * @var array
+     * @var array 
      */
     protected $fillable = [
         'name', 'description'
     ];
 
+    /**
+     * Get the role associated with the user.
+     */
     public function users()
     {
-        //return $this->hasMany('App\User', 'role_id', 'id');
-        return $this->belongsToMany(User::class);
+        //return $this->belongsToMany(User::class);
+        return $this->hasMany('App\User');
     }
-
-
 }

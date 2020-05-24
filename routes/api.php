@@ -16,6 +16,17 @@ use Illuminate\Http\Request;
 Route::post('register', 'API\RegisterController@register');
 Route::post('login', 'API\RegisterController@login');
 
+
+Route::group(['middleware' => ['auth:api']], function(){	//Only for loggedin uses
+
+	Route::group(['middleware' => ['teamauth']], function(){	//Only for team owner users
+		Route::post('createteam', 'API\TeamController@store');
+	});
+
+});
+
+/*
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+*/

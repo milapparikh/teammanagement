@@ -21,6 +21,12 @@ class RoleTableSeeder extends Seeder
 
         $role = new Role();
         $role->name = 'teamowner';
+        $role->description = 'registered as owners';
+        $role->save();
+        unset($role);
+
+        $role = new Role();
+        $role->name = 'teammanager';
         $role->description = 'registered as managers';
         $role->save();
         unset($role);

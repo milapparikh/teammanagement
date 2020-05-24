@@ -21,7 +21,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password','role_id'
     ];
 
     /**
@@ -36,9 +36,31 @@ class User extends Authenticatable
     /**
      * The attributes that should be cast to native types.
      *
-     * @var array
+     * @var array 
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-    ];
+    ];  
+
+    /**
+     * Get the user that owns the role.
+     */
+    public function role()
+    {
+        return $this->belongsTo('App\Role');
+    }    
+
+    /**
+     * Get the teamplayers for the users.
+     */
+    public function teamplayers()
+    {
+        return $this->belongsTo('App\Teamplayer');
+    } 
+
+
+    public function team()
+    {
+        return $this->hasOne('App\Team','created_by_user_id', 'id');
+    }
 }
