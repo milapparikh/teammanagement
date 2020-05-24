@@ -1,0 +1,96 @@
+{
+	"variables": [],
+	"info": {
+		"name": "TeamManagement",
+		"_postman_id": "ceb03685-a394-bada-d38b-11f37c391b50",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"request": {
+				"url": "http://localhost/teammanagement/public/api/login",
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "email",
+							"value": "teamownergujarat@gmail.com",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "Owner@123",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "TeamCreate",
+			"request": {
+				"url": "http://localhost/teammanagement/public/api/createteam",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {TOKEN}",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"user_id\":\"7\",\r\n\"team_name\":\"rajasthanroyal\",\r\n\"team_player\":[\r\n{\r\n\"player_name\":\"suresh\",\r\n\"player_email\":\"suresh@gmail.com\"\r\n},\r\n{\r\n\"player_name\":\"dhoni\",\r\n\"player_email\":\"dhoni@gmail.com\"\r\n}\r\n]\r\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "GetTeamInfo",
+			"request": {
+				"url": {
+					"raw": "http://localhost/teammanagement/public/api/getTeamInfo?id={USER_ID}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"teammanagement",
+						"public",
+						"api",
+						"getTeamInfo"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "{USER_ID}",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {TOKEN}",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
