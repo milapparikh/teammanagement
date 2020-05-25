@@ -14,6 +14,8 @@ class CreateTeamsTable extends Migration
     public function up()
     {
         Schema::create('teams', function (Blueprint $table) {
+            $table->collation = 'utf8_general_ci';
+            $table->charset = 'utf8';
             $table->increments('id'); 
             $table->string('team_name');
             $table->unsignedInteger('created_by_user_id');
