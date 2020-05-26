@@ -17,5 +17,10 @@ class DatabaseSeeder extends Seeder
 		$this->call(UserTableSeeder::class);
         // team name insert
         $this->call(TeamTableSeeder::class);
+
+        // Default country data load
+        $this->call(CountryTableSeeder::class);
+        // Default city data load
+        $this->call(CityTableSeeder::class);
     }
 }
