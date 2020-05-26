@@ -23,3 +23,4 @@ Step 5. Execute following command to store preload data in database.
 =>composer dump-autoload
 =>php artisan passport:client --personal
 =>php artisan migrate:fresh --seed 
+=>php artisan key:generate

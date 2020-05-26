@@ -50,29 +50,32 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        $rendered = parent::render($request, $exception);
-        $errorcode = $rendered->getStatusCode();
+        if ($request->wantsJson()){
+            $rendered = parent::render($request, $exception);
+            $errorcode = $rendered->getStatusCode();
 
-        switch ($errorcode) {
-            case 204:
-                $message = 'No Content Found!';
-                break;
-            case 404:
-                $message = 'This Record Not Found!';
-                break;
-            case 405:
-                $message = 'This Method Not Allowed!';
-                break;
-            
-            default:
-                $message = $exception->getMessage();
+            switch ($errorcode) {
+                case 204:
+                    $message = 'No Content Found!';
+                    break;
+                case 404:
+                    $message = 'This Record Not Found!';
+                    break;
+                case 405:
+                    $message = 'This Method Not Allowed!';
+                    break;
+                
+                default:
+                    $message = $exception->getMessage();
+            }
+
+            return response()->json([
+                    'status' => $errorcode,
+                    'message' => $message
+                ], $errorcode);
         }
-
-        return response()->json([
-                'status' => $errorcode,
-                'message' => $message
-            ], $errorcode);
-
-        //return parent::render($request, $exception);
+        else{
+            return parent::render($request, $exception);            
+        }
     }
 }
