@@ -16,6 +16,10 @@ Route::get('/dashboard', 'Auth\LoginController@dashboard');
 Route::post('post-login', 'Auth\LoginController@postLogin'); 
 Route::get('logout', 'Auth\LoginController@logout');
 
+Route::any('register', 'Auth\RegisterController@register');
+
+
+
 /*
 Route::get('/', function () {
     Route::get('/', 'Auth\LoginController@index');

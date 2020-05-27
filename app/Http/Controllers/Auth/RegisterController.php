@@ -8,9 +8,12 @@ use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-
+use Illuminate\Http\Request;
 class RegisterController extends Controller
 {
+    private $last_dataStep = 1;
+    private $last_dataSequence = 2;
+
     /*
     |--------------------------------------------------------------------------
     | Register Controller
@@ -54,7 +57,7 @@ class RegisterController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
-    }
+    } 
 
     /**
      * Create a new user instance after a valid registration.
@@ -70,4 +73,71 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
         ]);
     }
+
+    public function register(Request $request)
+    {
+        $method = $request->method();
+        $dataStep = 1;
+        $dataSequence = 2;
+//echo $method;
+
+        if($request->isMethod('post'))
+        {
+
+
+            $input = $request->all();
+            if($this->last_dataStep == 1 && $this->last_dataSequence == 2){
+                request()->validate([            
+                    'email' => 'required|email|unique:users'
+                ]);
+
+                //$this->last_dataStep = 1;
+                //$this->last_dataSequence = 3;
+                $dataStep = 1;
+                $dataSequence = 3;
+            }
+
+            if($this->last_dataStep == 1 && $this->last_dataSequence == 3){
+                //For gender
+
+                $dataStep = 2;
+                $dataSequence = 3;
+            }
+
+            if($this->last_dataStep == 2 && $this->last_dataSequence == 3){
+                //For identification
+
+                $dataStep = 3;
+                $dataSequence = 3;
+            }
+
+            if($this->last_dataStep == 3 && $this->last_dataSequence == 3){
+                //For DOB
+
+                $this->last_dataStep = 4;
+                $this->last_dataSequence = 3;
+            }
+
+            if($this->last_dataStep == 4 && $this->last_dataSequence == 3){
+                //For fnam, lname, email, p hone email, pswd
+
+                $this->last_dataStep = 5;
+                $this->last_dataSequence = 3;
+            }
+/*
+            //echo "test"; exit;
+  echo $this->last_dataStep;
+            echo 'br/>';
+            echo $this->last_dataSequence;
+            exit; */
+        }
+    
+        $this->last_dataStep = $dataStep;
+        $this->last_dataSequence = $dataSequence;
+
+
+          
+
+        return view('register',['dataStep'=>$dataStep,'dataSequence'=>$dataSequence]);        
+    }      
 }
