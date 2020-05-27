@@ -59,12 +59,20 @@ class LoginController extends Controller
  
         $credentials = $request->only('email', 'password');
         if (Auth::attempt($credentials)) {
-            // Authentication passed...
-            echo "Login"; exit;
-            return redirect()->intended('dashboard');
+            echo "successfully logged in";
+            return view('dashboard');
         }
        
-        //return Redirect::to("login")->withSuccess('Opps You have entered invalid credentials');
-        return Redirect::to("login")->with('success','Opps You have entered invalid credentials');
+        return Redirect::to("login")->withSuccess('Opps You have entered invalid credentials');
+        //return Redirect::to("login")->with('success','Opps You have entered invalid credentials');
     }    
+
+
+
+    public function logout() {
+        Session::flush();
+        Auth::logout();
+        return Redirect('login');
+    }
+
 }

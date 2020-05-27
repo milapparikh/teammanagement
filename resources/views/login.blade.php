@@ -1,13 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-        <meta name="HandheldFriendly" content="true"/>
-        <meta name="apple-mobile-web-app-capable" content="yes"/>
-    <title>Esfaria</title>
-    <meta name="csrf-token" content="{{ csrf_token() }}">    
-    <link rel="stylesheet" href="{{ asset('css/main.css') }}">   
+     @include('layouts/header')
 </head>
 
 <body class="body" data-step="1" data-sequence="1">
@@ -35,7 +29,7 @@
                 <div class="col-1 col-sm-1 col-md-1 col-lg-1 col-xl-1"></div>
               </div>
             </div>
-          </div>
+          </div> 
         
           <div class="container">
             <div class="row ">
@@ -45,7 +39,7 @@
                     <div class="register-content">
                       <div class="form-logo">
                         <div class="title">Welcome to</div>
-                        </a>
+                           @include('flash-message')                       
                       </div>
                       <form action="{{url('post-login')}}" method="POST" id="logForm">
                         {{ csrf_field() }}
@@ -85,37 +79,10 @@
           </div>
         </section>
       </div>
-
-      <footer class="footer">
-        <section class="">
-          <div class="container">
-            <div class="row">
-              <div class="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
-                <div class="widget widget-links">
-                  <div class="widget-body">
-                    <ul>
-                      <li><a href="#">Terms and Conditions</a></li>
-                      <li><a href="#">Privacy Policy</a></li>
-                      <li><a href="#">About Us</a></li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-      
-              <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                <div class="copyright">&copy;  2019, All Rights Reserved</div>
-              </div>
-            </div>
-          </div>
-        </section>
-      </footer>
+        @include('layouts/footer')
     </main>
 
-    <script src="{{ asset('/js/jquery.min.js') }}"></script>  
-    <script src="{{ asset('/js/jquery.min.js') }}"></script>  
-    <script src="{{ asset('/js/jquery.min.js') }}"></script>  
-    <script src="{{ asset('/js/jquery.min.js') }}"></script>  
-    <script src="{{ asset('/js/jquery.min.js') }}"></script>  
+     @include('layouts/footer-js')
   </body>
 </html>
 
