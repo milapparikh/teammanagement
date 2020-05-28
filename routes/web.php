@@ -17,7 +17,7 @@ Route::post('post-login', 'Auth\LoginController@postLogin');
 Route::get('logout', 'Auth\LoginController@logout');
 
 Route::any('register', 'Auth\RegisterController@register');
-
+Route::get('citylist','Auth\RegisterController@getCityList');
 
 
 /*

@@ -217,54 +217,7 @@
                           </div>
                         </div>
 
-                        <div class="location-step" data-step="3">
-                          <div class="location-step-element">
-                            <div class="title">Country</div>
-                            <div class="selection">
-                              <select data-placeholder="Several Options">
-                                <option value=""></option>
-                                <option value="option1">Option 1</option>
-                                <option value="option2">Option 2</option>
-                                <option value="option3">Option 3</option>
-                                <option value="option4">Option 4</option>
-                              </select>
-                            </div>
-                          </div>
-
-                          <div class="location-step-element">
-                            <div class="title">City</div>
-                            <div class="selection">
-                              <select data-placeholder="Several Options">
-                                <option value=""></option>
-                                <option value="option1">Option 1</option>
-                                <option value="option2">Option 2</option>
-                                <option value="option3">Option 3</option>
-                                <option value="option4">Option 4</option>
-                              </select>
-                            </div>
-                          </div>
-
-                          <div class="location-step-element">
-                            <div class="title">Postal Code</div>
-                            <div class="selection">
-                              <select data-placeholder="Several Options">
-                                <option value=""></option>
-                                <option value="option1">Option 1</option>
-                                <option value="option2">Option 2</option>
-                                <option value="option3">Option 3</option>
-                                <option value="option4">Option 4</option>
-                                <option value="option5">Option 5</option>
-                                <option value="option6">Option 6</option>
-                                <option value="option7">Option 7</option>
-                                <option value="option8">Option 8</option>
-                                <option value="option9">Option 9</option>
-                                <option value="option10">Option 10</option>
-                                <option value="option11">Option 11</option>
-                                <option value="option12">Option 12</option>
-                              </select>
-                            </div>
-                          </div>
-                        </div>
+                         @include('location',['country'=>$country,'city'=>$city])
 
                         <div class="id-step" data-step="2">
                           <div class="id-step-element">
@@ -303,7 +256,7 @@
 
                                 <div class="options-dropdow-element">
                                   <label data-sound-hover="sonidoC" data-sound-click="sonidoB">
-                                    <input type="checkbox" name="id_step_option" value="Option 2">
+                                    <input type="checkbox" name="id_step_option" value="Option 3">
                                     <span class="text">Option 3</span>
                                   </label>
                                 </div>
@@ -342,7 +295,7 @@
                         <div class="gender-step" data-step="1">                          
                           <div class="gender-element female-gender">
                             <label data-sound-hover="sonidoA" data-sound-click="sonidoB">
-                              <input type="radio" name="frmgender" id="frmgender1" value="female">
+                              <input type="radio" name="frmgender" value="female">
                               <span class="parent-icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 239.21 369.43">
                                   <g>
@@ -359,7 +312,7 @@
                         
                           <div class="gender-element male-gender">
                             <label data-sound-hover="sonidoA" data-sound-click="sonidoB">
-                              <input type="radio" name="frmgender"  id="frmgender2" value="male">
+                              <input type="radio" name="frmgender" value="male">
                               <span class="parent-icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 296.19 296.2">
                                   <g>
@@ -376,7 +329,7 @@
                         
                           <div class="gender-element other-gender">
                             <label data-sound-hover="sonidoA" data-sound-click="sonidoB">
-                              <input type="radio" name="frmgender" id="frmgender3"  value="other">
+                              <input type="radio" name="frmgender" value="other">
                               <span class="parent-icon">
                                 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                   viewBox="0 0 302 310" style="enable-background:new 0 0 302 310;" xml:space="preserve">
@@ -405,7 +358,7 @@
                             <div class="step-result id-result" data-show="2">
                               <div class="count"> 02</div>
                               <div class="selected-step">Id</div>
-                              <div class="description"><span>Fan</span><span>FreeStyle</span><span>Forward</span><span>Goalkeeper</span></div>
+                              <div class="description"><span>{{ Session::get('identification') }}</span></div>
                             </div>
                             <div class="step-result place-result" data-show="3">
                               <div class="count"> 03</div>
@@ -429,17 +382,47 @@
 
 <form action="{{url('register')}}" id="regStepFrm" name="regStepFrm">
     {{ csrf_field() }}
-    <input type="text" name="dataStep" id="dataStep">
-    <input type="text" name="dataSequence" id="dataSequence">
-    <input type="text" name="email" id="email">
-    <input type="text" name="gender" id="gender">
+    <input type="hidden" name="dataStep" id="dataStep">
+    <input type="hidden" name="dataSequence" id="dataSequence">
+    <input type="hidden" name="email" id="email">
+    <input type="hidden" name="gender" id="gender">
+    <input type="hidden" name="identification" id="identification">
 </form>          
         </section>
       </div>
 
       @include('layouts/footer')
     </main>
-    @include('layouts/footer-js')
+
+    @include('layouts/footer-js')    
+    <script type="text/javascript">
+        $('#country').change(function(){
+        var countryID = $(this).val();    
+        if(countryID){
+            $.ajax({
+                type:"GET",
+                url:"{{url('citylist')}}?country_id="+countryID,
+                success:function(res){               
+                if(res){
+                    $("#city").empty();
+                    $("#city").append('<option>Select</option>');
+                    $.each(res,function(key,value){
+                      alert(key);
+                        $("#city").append('<option value="'+key+'">'+value+'</option>');
+                    });           
+                }else{
+                    $("#city").empty();
+                  }
+                }
+            });
+        }else{
+            $("#city").empty();
+        }      
+   });
+    
+</script>
+
+    
   </body>
 </html>
 

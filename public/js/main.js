@@ -38,7 +38,7 @@ jQuery(document).ready(function () {
 		"mouseenter",
 		"[data-sound-hover]",
 		function() {
-            console.log($(this));
+            //console.log($(this));
 			var audio = new Audio("assets/sound/" + $(this).attr("data-sound-hover") + ".mp3");
 			audio.play();
 
@@ -97,13 +97,15 @@ jQuery(document).ready(function () {
 		ajaxFrmSubmit();
 	});
 
+
     genderLabel.each(function() {
         jQuery(this).on('click', function () {
         	//body.attr('data-step', 2);
         	var radioButton = $("input[name='frmgender']:checked");
+
+        	//var radioButton = $('input[type=radio]:checked');
         	if (radioButton.length > 0) {
-        		radioVal = radioButton.val();
-        		$('#gender').val(radioVal);
+        		$('#gender').val(radioButton.val());
         	}
 
 			$('#dataStep').val(1);
@@ -158,7 +160,7 @@ jQuery(document).ready(function () {
 		$("#regStepFrm").submit(); //Submit  the FORM    	
     }
 
-
+	
 
     stepResult.each(function () {
         var stepResultData = jQuery(this).data('show');
@@ -178,11 +180,36 @@ jQuery(document).ready(function () {
         var bodyStep = parseInt(body.attr('data-step'));
         //changeStep(bodyStep , ++bodyStep);
 
+
         if(bodyStep == 1)
 		{
 			$('#dataStep').val(1);
 			$('#dataSequence').val(3);
 			ajaxFrmSubmit();
+		}
+		else if(bodyStep == 2)
+		{
+			var checkboxValues = [];
+			var selected;
+			jQuery('input:checkbox[name=id_step]:checked').each(function() {
+
+				if($(this).val() == 'Played'){
+					jQuery('input:checkbox[name=id_step_option]:checked').each(function() {
+						 checkboxValues.push($(this).val());
+					});
+				}
+				else
+					 checkboxValues.push($(this).val());
+			   
+			  // alert(111);
+			});
+			selected = checkboxValues.join(',');
+			//console.log(checkboxValues);
+			//console.log(selected);
+			$('#dataStep').val(2);
+			$('#dataSequence').val(3);
+			$('#identification').val(selected);	
+			ajaxFrmSubmit();		
 		}
 		else
 			changeStep(bodyStep , ++bodyStep);
@@ -210,8 +237,7 @@ jQuery(document).ready(function () {
             jQuery(this).toggleClass("icon-eye2 icon-eye-blocked2");
 
             formItemPassword.attr('type') === 'password' ? formItemPassword.attr('type', 'text') : formItemPassword.attr('type', 'password')
-
-            console.log("sss");
+            //console.log("sss");
         });
     } 
 });

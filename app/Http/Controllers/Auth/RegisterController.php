@@ -9,11 +9,10 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
 class RegisterController extends Controller
 {
-    private $last_dataStep = 1;
-    private $last_dataSequence = 2;
-
     /*
     |--------------------------------------------------------------------------
     | Register Controller
@@ -76,6 +75,9 @@ class RegisterController extends Controller
 
     public function register(Request $request)
     {
+        $country = DB::table('countrys')->select('id','country_name')->get();
+        $city = DB::table('citys')->select('id','city_name')->where('id', '=', '0')->get();
+
         $method = $request->method();
         $input = $request->all();
         $dataStep = 1;
@@ -114,16 +116,24 @@ class RegisterController extends Controller
                     return response()->json(['error'=>$validator->errors()->all()]);
                 }
 
-
                 if($input['dataStep'] == 2 && $input['dataSequence'] == 3){
-                    //for email part
+                    //for identification part                   
+                    $this->storestepsvalue($request);                
+                    return response()->json(['success'=>'Proceed to next Step','nxtDataStep'=>'3','nxtDataSeq'=>'3']);
+                }
 
+                if($input['dataStep'] == 3 && $input['dataSequence'] == 4){
+                    //for email part
                     $validator = Validator::make($input, [
-                        'gender' => 'required|in:female,male,other'
+                        'country' => 'required|exists:countrys,id',
+                        'city' => 'required|exists:citys,id',
+                        'postal_code' => 'required'
+
                     ]);
                                        
                     if ($validator->passes()) {
-                        return response()->json(['success'=>'Proceed to next Step','nxtDataStep'=>'3','nxtDataSeq'=>'3']);
+                        $this->storestepsvalue($request);
+                        return response()->json(['success'=>'Proceed to next Step','nxtDataStep'=>'4','nxtDataSeq'=>'3']);
                     }
 
                     return response()->json(['error'=>$validator->errors()->all()]);
@@ -132,14 +142,8 @@ class RegisterController extends Controller
             }
         }
 
-//print_r($input); exit;
-/*
-            if($input['dataStep'] == 3 && $input['dataSequence'] == 3){
-                //For DOB
 
-                $dataStep = 4;
-                $dataSequence = 3;
-            }
+/*
 
             if($input['dataStep'] == 4 && $input['dataSequence'] == 3){
                 //For fnam, lname, email, p hone email, pswd
@@ -149,10 +153,17 @@ class RegisterController extends Controller
             }
 */
 
-
-        return view('register');        
+        return view('register',['country'=>$country,'city'=>$city]);        
        // return view('register',['dataStep'=>$dataStep,'dataSequence'=>$dataSequence]);        
     }      
+
+    public function getCityList(Request $request)
+    {
+        $city = DB::table('citys')
+        ->where('country_id',$request->country_id)
+        ->pluck('city_name','id');
+        return response()->json($city);
+    }
 
     private function storestepsvalue($request)
     {
@@ -162,5 +173,8 @@ class RegisterController extends Controller
 
         if($input['dataStep'] == 1 && $input['dataSequence'] == 3 && $input['gender'] != '')
             $request->session()->put('gender',$input['gender']);
+
+        if($input['dataStep'] == 2 && $input['dataSequence'] == 3 && $input['identification'] != '')
+            $request->session()->put('identification',$input['identification']);
     }
 }
