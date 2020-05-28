@@ -11,6 +11,17 @@
       <span class="section-background section-background-2"></span>
       <span class="location-background"></span>
 
+         <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+            <div class="row ">
+                <div >
+                  <div class="alert alert-danger print-error-msg" style="display:none">
+                      <ul class="enter-code"></ul>
+                  </div>
+              </div>
+            </div>
+        </div>
+
+
       <div class="parent-sections">
         <section class="section section-1 rounded-section full-page-register to-column align-to-middle align-to-center">
           <div class="container-gridded">
@@ -48,9 +59,9 @@
                           <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                             <div class="form-line">
                               <input type="email" class="form-item" name="frmemail" id="frmemail" placeholder="*Email" class="form-control">
-                                <div class="alert alert-danger print-error-msg" style="display:none">
-                                  <ul></ul>
-                              </div>
+                                <!--<div class="alert alert-danger print-error-msg" style="display:none">
+                                    <ul></ul>
+                                </div>-->
                               <div class="enter-code">Get started by entering your email</div>
                             </div>
                           </div>
@@ -71,6 +82,7 @@
         </section>
 
         <section class="section section-2 steps-section full-page to-column align-to-middle">
+
           <div class="container-gridded">
             <div class="container">
               <div class="row">
@@ -93,9 +105,7 @@
           <div class="container">
             <div class="row steps-section-content no-margin-nested-row">
               <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                <div class="row">
-                  
-                
+                <div class="row">                
                   <div class="col-12 col-sm-12 col-md-12 col-lg-9 col-xl-9"></div>
                 </div>
               </div>
@@ -110,7 +120,8 @@
                         <div class="title-content location-title">Enter your <br>Location</div>
                         <div class="title-content birth-title">Enter your <br>Birth Date</div>
                         <div class="title-content info-title">Enter your <br>Personal Info</div>
-                      </div>
+                      </div>                      
+
                       <div class="arrows">
                         <div class="arrow-control prev-arrow" data-sound-hover="Prev-Next">
                           <span class="icon icomoon icon-arrow-left4"></span>
@@ -167,15 +178,6 @@
                                       </label>
                                     </div>
                                   </div>
-                                  <!-- <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                    <div class="form-line form-line-checkbox">
-                                      <label>
-                                        <input type="checkbox" name="privacy" value="I agree with that!">
-                                        <span class="checkbox"></span>
-                                        <span class="text">I agree with that!</span>
-                                      </label>
-                                    </div>
-                                  </div> -->
 
 
                                   <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -340,7 +342,7 @@
                         <div class="gender-step" data-step="1">                          
                           <div class="gender-element female-gender">
                             <label data-sound-hover="sonidoA" data-sound-click="sonidoB">
-                              <input type="radio" name="frmgender" value="female">
+                              <input type="radio" name="frmgender" id="frmgender1" value="female">
                               <span class="parent-icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 239.21 369.43">
                                   <g>
@@ -357,7 +359,7 @@
                         
                           <div class="gender-element male-gender">
                             <label data-sound-hover="sonidoA" data-sound-click="sonidoB">
-                              <input type="radio" name="frmgender" value="male">
+                              <input type="radio" name="frmgender"  id="frmgender2" value="male">
                               <span class="parent-icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 296.19 296.2">
                                   <g>
@@ -374,7 +376,7 @@
                         
                           <div class="gender-element other-gender">
                             <label data-sound-hover="sonidoA" data-sound-click="sonidoB">
-                              <input type="radio" name="frmgender" value="other">
+                              <input type="radio" name="frmgender" id="frmgender3"  value="other">
                               <span class="parent-icon">
                                 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                   viewBox="0 0 302 310" style="enable-background:new 0 0 302 310;" xml:space="preserve">
@@ -398,7 +400,7 @@
                             <div class="step-result gender-result" data-show="1">
                               <div class="count"> 01</div>
                               <div class="selected-step">Sex</div>
-                              <div class="description"><span>Masculine</span></div>
+                              <div class="description"><span> {{ Session::get('gender') }}</span></div>
                             </div>
                             <div class="step-result id-result" data-show="2">
                               <div class="count"> 02</div>

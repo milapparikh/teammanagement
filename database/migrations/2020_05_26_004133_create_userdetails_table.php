@@ -24,7 +24,8 @@ class CreateUserdetailsTable extends Migration
             $table->string('first_name', 100);
             $table->string('last_name', 100);
             $table->enum('gender', ['Male','Female','Other']);
-            $table->enum('identification', ['Fan','Played','DT','Freestyle']);
+            //$table->enum('identification', ['Fan','Played','DT','Freestyle']);
+            $table->string('identification', 255);
             $table->string('postal_code', 100);
             $table->string('parent_phone_email', 250);
             $table->date('birth_date');

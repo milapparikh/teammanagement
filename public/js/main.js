@@ -89,13 +89,28 @@ jQuery(document).ready(function () {
 
 	goNow.on('click', function (e) {
 		e.preventDefault();
-
-		$('#email').val($('#frmemail').val())
-		$('#dataStep').val(1)
-		$('#dataSequence').val(2)
-		ajaxFrmSubmit(1,2);
 		//body.attr('data-sequence', 3);
+
+		$('#email').val($('#frmemail').val());
+		$('#dataStep').val(1);
+		$('#dataSequence').val(2);
+		ajaxFrmSubmit();
 	});
+
+    genderLabel.each(function() {
+        jQuery(this).on('click', function () {
+        	//body.attr('data-step', 2);
+        	var radioButton = $("input[name='frmgender']:checked");
+        	if (radioButton.length > 0) {
+        		radioVal = radioButton.val();
+        		$('#gender').val(radioVal);
+        	}
+
+			$('#dataStep').val(1);
+			$('#dataSequence').val(3);
+			ajaxFrmSubmit();
+        });
+    });
 
     function printErrorMsg (msg) {
         $(".print-error-msg").find("ul").html('');
@@ -105,7 +120,7 @@ jQuery(document).ready(function () {
         });
     }
 
-    function ajaxFrmSubmit(nxtDataStep,nxtDataSeq){
+    function ajaxFrmSubmit(){
 		//callback handler for form submit
 		$("#regStepFrm").submit(function(e)
 		{
@@ -116,40 +131,34 @@ jQuery(document).ready(function () {
 		        url : formURL,
 		        type: "POST",
 		        data : postData,
-		        nxtDataSeq : nxtDataSeq,
 		        success:function(data, textStatus, jqXHR) 
 		        {
 		            //data: return data from server
-		        /*    alert('success');
-		            alert(data.error);
-		            alert(textStatus);
-		            alert(jqXHR);
-		        */    if(data.error)
+		            //alert('success');
+		          
+		        	if(data.error){
 		            	printErrorMsg(data.error);
-		            else
-		            	body.attr('data-sequence',nxtDataSeq);
+		        	}
+		            else{		            	
+		            	//body.attr('data-sequence',3);
+		            	body.attr('data-sequence',data.nxtDataSeq);
+		            	body.attr('data-step', data.nxtDataStep);
+		            }
 		        },
 		        error: function(jqXHR, textStatus, errorThrown) 
 		        {
 		            //if fails
-		        /*    alert('fails');    
-		            alert(jqXHR);
-		            alert(textStatus);
-		            alert(errorThrown);  		            
-		       */ }
+		            //alert('fails');    
+		        }
 		    });
 		    e.preventDefault(); //STOP default action
-		    e.unbind(); //unbind. to stop multiple form submit.
+		    //e.unbind(); //unbind. to stop multiple form submit.
 		});
-		 
+
 		$("#regStepFrm").submit(); //Submit  the FORM    	
     }
 
-    genderLabel.each(function() {
-        jQuery(this).on('click', function () {
-            body.attr('data-step', 2);
-        });
-    });
+
 
     stepResult.each(function () {
         var stepResultData = jQuery(this).data('show');
@@ -167,8 +176,16 @@ jQuery(document).ready(function () {
 
     nextArrow.on('click', function () {
         var bodyStep = parseInt(body.attr('data-step'));
+        //changeStep(bodyStep , ++bodyStep);
 
-		changeStep(bodyStep , ++bodyStep);
+        if(bodyStep == 1)
+		{
+			$('#dataStep').val(1);
+			$('#dataSequence').val(3);
+			ajaxFrmSubmit();
+		}
+		else
+			changeStep(bodyStep , ++bodyStep);
     });
 
 
