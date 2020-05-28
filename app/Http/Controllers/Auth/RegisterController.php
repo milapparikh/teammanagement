@@ -77,67 +77,99 @@ class RegisterController extends Controller
     public function register(Request $request)
     {
         $method = $request->method();
+        $input = $request->all();
         $dataStep = 1;
         $dataSequence = 2;
-//echo $method;
+        
+
+        if($request->ajax())
+        {
+            if($request->isMethod('post')){
+                if($input['dataStep'] == 1 && $input['dataSequence'] == 2){
+                    //for email part
+                    $validator = Validator::make($request->all(), [
+                        'email' => 'required|email|unique:users'
+                    ]);
+                                       
+                    if ($validator->passes()) {
+                        return response()->json(['success'=>'Proceed to next Step']);
+                    }
+
+                    return response()->json(['error'=>$validator->errors()->all()]);
+                }
+
+                if($input['dataStep'] == 1 && $input['dataSequence'] == 3){
+                    //for email part
+                    $validator = Validator::make($request->all(), [
+                        'gender' => 'required|in:female,male,gender'
+                    ]);
+                                       
+                    if ($validator->passes()) {
+                        return response()->json(['success'=>'Proceed to next Step']);
+                    }
+
+                    return response()->json(['error'=>$validator->errors()->all()]);
+                }
+
+
+
+            }
+        }
+
 
         if($request->isMethod('post'))
         {
-
-
-            $input = $request->all();
-            if($this->last_dataStep == 1 && $this->last_dataSequence == 2){
+  
+print_r($input); exit;
+/*
+            if($input['dataStep'] == 1 && $input['dataSequence'] == 2){
+                //for email part
                 request()->validate([            
                     'email' => 'required|email|unique:users'
                 ]);
 
-                //$this->last_dataStep = 1;
-                //$this->last_dataSequence = 3;
                 $dataStep = 1;
                 $dataSequence = 3;
             }
-
-            if($this->last_dataStep == 1 && $this->last_dataSequence == 3){
+            
+            if($input['dataStep'] == 1 && $input['dataSequence'] == 3){
                 //For gender
+                request()->validate([            
+                    'gender' => 'required|in:female,male,gender'
+                ]);
 
                 $dataStep = 2;
                 $dataSequence = 3;
             }
 
-            if($this->last_dataStep == 2 && $this->last_dataSequence == 3){
+            if($input['dataStep'] == 2 && $input['dataSequence'] == 3){
                 //For identification
 
                 $dataStep = 3;
                 $dataSequence = 3;
             }
 
-            if($this->last_dataStep == 3 && $this->last_dataSequence == 3){
+            if($input['dataStep'] == 3 && $input['dataSequence'] == 3){
                 //For DOB
 
-                $this->last_dataStep = 4;
-                $this->last_dataSequence = 3;
+                $dataStep = 4;
+                $dataSequence = 3;
             }
 
-            if($this->last_dataStep == 4 && $this->last_dataSequence == 3){
+            if($input['dataStep'] == 4 && $input['dataSequence'] == 3){
                 //For fnam, lname, email, p hone email, pswd
 
-                $this->last_dataStep = 5;
-                $this->last_dataSequence = 3;
+                $dataStep = 5;
+                $dataSequence = 3;
             }
-/*
-            //echo "test"; exit;
-  echo $this->last_dataStep;
-            echo 'br/>';
-            echo $this->last_dataSequence;
-            exit; */
-        }
-    
-        $this->last_dataStep = $dataStep;
-        $this->last_dataSequence = $dataSequence;
+*/
 
+           
+        }
+       
 
           
-
-        return view('register',['dataStep'=>$dataStep,'dataSequence'=>$dataSequence]);        
+        return view('register');        
+       // return view('register',['dataStep'=>$dataStep,'dataSequence'=>$dataSequence]);        
     }      
 }

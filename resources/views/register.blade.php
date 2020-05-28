@@ -4,7 +4,8 @@
      @include('layouts/header')
 </head>
 
-<body class="body" data-step="{{ $dataStep }}" data-sequence="{{ $dataSequence }}">
+<!-- <body class="body" data-step="{{ $dataStep ?? '' }}" data-sequence="{{ $dataSequence ?? '' }}"> -->
+  <body class="body" data-step="1" data-sequence="2">
     <main class="page-bg">
       <span class="section-background section-background-1"></span>
       <span class="section-background section-background-2"></span>
@@ -40,19 +41,16 @@
                       <div class="form-logo">
                         <div class="title">Welcome to</div>                        
                       </div>
-                                            
-                      <form action="{{url('register')}}" method="POST" id="regStepOneFrm" name="regStepOneFrm">
-                         {{ csrf_field() }}
                         <div class="row">
                           <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                             <div class="form-title">Passion live</div>
                           </div>
                           <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                             <div class="form-line">
-                              <input type="email" class="form-item" name="email" placeholder="*Email" class="form-control">
-                              @if ($errors->has('email'))
-                                <span class="error">{{ $errors->first('email') }}</span>
-                              @endif  
+                              <input type="email" class="form-item" name="frmemail" id="frmemail" placeholder="*Email" class="form-control">
+                                <div class="alert alert-danger print-error-msg" style="display:none">
+                                  <ul></ul>
+                              </div>
                               <div class="enter-code">Get started by entering your email</div>
                             </div>
                           </div>
@@ -63,7 +61,7 @@
                             </div>
                           </div>
                         </div>
-                      </form>
+                      
                     </div>
                   </div>
                 </div>
@@ -96,9 +94,7 @@
             <div class="row steps-section-content no-margin-nested-row">
               <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                 <div class="row">
-                  <div class="col-12 col-sm-12 col-md-12 col-lg-3 col-xl-3">
-                    <div class="logo"><img src="assets/image/logo.png" alt=""></div>
-                  </div>
+                  
                 
                   <div class="col-12 col-sm-12 col-md-12 col-lg-9 col-xl-9"></div>
                 </div>
@@ -133,7 +129,7 @@
                         <div class="info-step" data-step="5">
                           <div class="info-step-form">
                             <div class="info-step-form-content">
-                              <form action="">
+                              
                                 <div class="row">
                                   <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
                                     <div class="form-line">
@@ -188,7 +184,7 @@
                                     </div>
                                   </div>
                                 </div>
-                              </form>
+                             
                             </div>
                           </div>
                         </div>
@@ -340,13 +336,11 @@
                           </div>
                         </div>
                         
-                        <div>
-                        <form action="{{url('register')}}" method="POST" id="regStepTwoFrm" name="regStepTwoFrm">
-                          {{ csrf_field() }}
+
                         <div class="gender-step" data-step="1">                          
                           <div class="gender-element female-gender">
                             <label data-sound-hover="sonidoA" data-sound-click="sonidoB">
-                              <input type="radio" name="gender" value="female">
+                              <input type="radio" name="frmgender" value="female">
                               <span class="parent-icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 239.21 369.43">
                                   <g>
@@ -363,7 +357,7 @@
                         
                           <div class="gender-element male-gender">
                             <label data-sound-hover="sonidoA" data-sound-click="sonidoB">
-                              <input type="radio" name="gender" value="male" onclick="document.regStepTwoFrm.submit();">
+                              <input type="radio" name="frmgender" value="male">
                               <span class="parent-icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 296.19 296.2">
                                   <g>
@@ -380,7 +374,7 @@
                         
                           <div class="gender-element other-gender">
                             <label data-sound-hover="sonidoA" data-sound-click="sonidoB">
-                              <input type="radio" name="gender" value="other">
+                              <input type="radio" name="frmgender" value="other">
                               <span class="parent-icon">
                                 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                   viewBox="0 0 302 310" style="enable-background:new 0 0 302 310;" xml:space="preserve">
@@ -396,10 +390,8 @@
                               <span class="gender">Other</span>
                             </label>
                           </div>
-                        
                         </div>
-                      </form>
-                    </div>
+
 
                         <div class="options-steps-result">
                           <div class="options-steps-result-content">
@@ -432,6 +424,14 @@
               </div>
             </div>
           </div>
+
+<form action="{{url('register')}}" id="regStepFrm" name="regStepFrm">
+    {{ csrf_field() }}
+    <input type="text" name="dataStep" id="dataStep">
+    <input type="text" name="dataSequence" id="dataSequence">
+    <input type="text" name="email" id="email">
+    <input type="text" name="gender" id="gender">
+</form>          
         </section>
       </div>
 

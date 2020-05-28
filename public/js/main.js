@@ -89,8 +89,61 @@ jQuery(document).ready(function () {
 
 	goNow.on('click', function (e) {
 		e.preventDefault();
-		body.attr('data-sequence', 3);
+
+		$('#email').val($('#frmemail').val())
+		$('#dataStep').val(1)
+		$('#dataSequence').val(2)
+		ajaxFrmSubmit(1,2);
+		//body.attr('data-sequence', 3);
 	});
+
+    function printErrorMsg (msg) {
+        $(".print-error-msg").find("ul").html('');
+        $(".print-error-msg").css('display','block');
+        $.each( msg, function( key, value ) {
+            $(".print-error-msg").find("ul").append('<li>'+value+'</li>');
+        });
+    }
+
+    function ajaxFrmSubmit(nxtDataStep,nxtDataSeq){
+		//callback handler for form submit
+		$("#regStepFrm").submit(function(e)
+		{
+		    var postData = $(this).serializeArray();
+		    var formURL = $(this).attr("action");
+		    $.ajax(
+		    {
+		        url : formURL,
+		        type: "POST",
+		        data : postData,
+		        nxtDataSeq : nxtDataSeq,
+		        success:function(data, textStatus, jqXHR) 
+		        {
+		            //data: return data from server
+		        /*    alert('success');
+		            alert(data.error);
+		            alert(textStatus);
+		            alert(jqXHR);
+		        */    if(data.error)
+		            	printErrorMsg(data.error);
+		            else
+		            	body.attr('data-sequence',nxtDataSeq);
+		        },
+		        error: function(jqXHR, textStatus, errorThrown) 
+		        {
+		            //if fails
+		        /*    alert('fails');    
+		            alert(jqXHR);
+		            alert(textStatus);
+		            alert(errorThrown);  		            
+		       */ }
+		    });
+		    e.preventDefault(); //STOP default action
+		    e.unbind(); //unbind. to stop multiple form submit.
+		});
+		 
+		$("#regStepFrm").submit(); //Submit  the FORM    	
+    }
 
     genderLabel.each(function() {
         jQuery(this).on('click', function () {
