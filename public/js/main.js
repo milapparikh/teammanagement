@@ -94,7 +94,7 @@ jQuery(document).ready(function () {
 		$('#email').val($('#frmemail').val());
 		$('#dataStep').val(1);
 		$('#dataSequence').val(2);
-		ajaxFrmSubmit();
+		$("#regStepFrm").submit(); //Submit  the FORM 
 	});
 
 
@@ -106,11 +106,12 @@ jQuery(document).ready(function () {
         	//var radioButton = $('input[type=radio]:checked');
         	if (radioButton.length > 0) {
         		$('#gender').val(radioButton.val());
+        		//////console.log(1111111111);
+				$('#dataStep').val(1);
+				$('#dataSequence').val(3);
+				$("#regStepFrm").submit(); //Submit  the FORM    
         	}
 
-			$('#dataStep').val(1);
-			$('#dataSequence').val(3);
-			ajaxFrmSubmit();
         });
     });
 
@@ -122,44 +123,45 @@ jQuery(document).ready(function () {
         });
     }
 
-    function ajaxFrmSubmit(){
-		//callback handler for form submit
-		$("#regStepFrm").submit(function(e)
-		{
-		    var postData = $(this).serializeArray();
-		    var formURL = $(this).attr("action");
-		    $.ajax(
-		    {
-		        url : formURL,
-		        type: "POST",
-		        data : postData,
-		        success:function(data, textStatus, jqXHR) 
-		        {
-		            //data: return data from server
-		            //alert('success');
-		          
-		        	if(data.error){
-		            	printErrorMsg(data.error);
-		        	}
-		            else{		            	
-		            	//body.attr('data-sequence',3);
-		            	body.attr('data-sequence',data.nxtDataSeq);
-		            	body.attr('data-step', data.nxtDataStep);
-		            }
-		        },
-		        error: function(jqXHR, textStatus, errorThrown) 
-		        {
-		            //if fails
-		            //alert('fails');    
-		        }
-		    });
-		    e.preventDefault(); //STOP default action
-		    //e.unbind(); //unbind. to stop multiple form submit.
-		});
-
-		$("#regStepFrm").submit(); //Submit  the FORM    	
+    function removeErrorMsg () {
+        $(".print-error-msg").find("ul").html('');
+        $(".print-error-msg").css('display','none');        
     }
 
+	//callback handler for form submit
+	$("#regStepFrm").submit(function(e)
+	{
+	    var postData = $(this).serializeArray();
+	    var formURL = $(this).attr("action");
+	    $.ajax(
+	    {
+	        url : formURL,
+	        type: "POST",
+	        data : postData,
+	        success:function(data, textStatus, jqXHR) 
+	        {
+	            //data: return data from server
+	            //alert('success');
+	          
+	        	if(data.error){
+	            	printErrorMsg(data.error);
+	        	}
+	            else{	
+	            	removeErrorMsg();	            	
+	            	//body.attr('data-sequence',3);
+	            	body.attr('data-sequence',data.nxtDataSeq);
+	            	body.attr('data-step', data.nxtDataStep);
+	            }
+	        },
+	        error: function(jqXHR, textStatus, errorThrown) 
+	        {
+	            //if fails
+	            //alert('fails');    
+	        }
+	    });
+	    e.preventDefault(); //STOP default action
+	    //e.unbind(); //unbind. to stop multiple form submit.
+	});
 	
 
     stepResult.each(function () {
@@ -181,14 +183,12 @@ jQuery(document).ready(function () {
         //changeStep(bodyStep , ++bodyStep);
 
 
-        if(bodyStep == 1)
-		{
+        if(bodyStep == 1){
 			$('#dataStep').val(1);
 			$('#dataSequence').val(3);
-			ajaxFrmSubmit();
+			$("#regStepFrm").submit(); //Submit  the FORM 
 		}
-		else if(bodyStep == 2)
-		{
+		else if(bodyStep == 2){
 			var checkboxValues = [];
 			var selected;
 			jQuery('input:checkbox[name=id_step]:checked').each(function() {
@@ -209,7 +209,22 @@ jQuery(document).ready(function () {
 			$('#dataStep').val(2);
 			$('#dataSequence').val(3);
 			$('#identification').val(selected);	
-			ajaxFrmSubmit();		
+			$("#regStepFrm").submit(); //Submit  the FORM 		
+		}
+		else if(bodyStep == 3){
+			$('#dataStep').val(3);
+			$('#dataSequence').val(4);
+			$('#country').val($('#countrySelect').val());
+			$('#city').val($('#citySelect').val());
+			$('#postal_code').val($('#frmpostalcode').val());
+			alert($('#country :selected').text());
+			$("#regStepFrm").submit();
+		}
+		else if(bodyStep == 4){
+			alert($('#frm_birthday').val());
+			alert($('#frm_birthmonth').val());
+			alert($('#frm_birthyear').val());
+
 		}
 		else
 			changeStep(bodyStep , ++bodyStep);

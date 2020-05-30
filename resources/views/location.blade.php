@@ -2,7 +2,7 @@
                           <div class="location-step-element">
                             <div class="title">Country</div>
                             <div class="selection">
-                              <select data-placeholder="Several Options" id="country">
+                              <select data-placeholder="Several Options" id="countrySelect" name="countrySelect">
                               <option value=""></option>
                                 @if($country->count() > 0)
                                   @foreach($country as $oCountry)
@@ -12,13 +12,19 @@
                               </select>
                             </div>
                           </div>
+<!--
+ <div class="form-group">
+                <label for="title">Select City:</label>
+                <select name="city" id="city" class="form-control" style="width:350px">
+                </select>
+            </div>
+-->
 
                           <div class="location-step-element">
                             <div class="title">City</div>
                             <div class="selection">
-                               <select name="city" id="city" class="form-control">
-                              </select>
-
+                            <select data-placeholder="Several Options" name="citySelect" id="citySelect" class="form-control">
+                            </select>
                               <!--
                               <select data-placeholder="Several Options" id="city">
                                 <option value=""></option>
@@ -35,7 +41,13 @@
                           <div class="location-step-element">
                             <div class="title">Postal Code</div>
                             <div class="selection">
-                              <select data-placeholder="Several Options">
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+                                <div class="form-line">
+                                    <input type="text" class="form-item" name="frmpostalcode" id="frmpostalcode"  class="form-control">
+                                </div>
+                            </div>
+                              <!--
+                              <select data-placeholder="Several Options" id="postal_codeselect" name="postal_codeselect">
                                 <option value=""></option>
                                 <option value="option1">Option 1</option>
                                 <option value="option2">Option 2</option>
@@ -50,6 +62,7 @@
                                 <option value="option11">Option 11</option>
                                 <option value="option12">Option 12</option>
                               </select>
+                            -->
                             </div>
                           </div>
                         </div>

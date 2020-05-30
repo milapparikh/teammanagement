@@ -104,6 +104,8 @@ class RegisterController extends Controller
 
                 if($input['dataStep'] == 1 && $input['dataSequence'] == 3){
                     //for email part
+
+                    //print_r($input);    exit;
                     $validator = Validator::make($input, [
                         'gender' => 'required|in:female,male,other'
                     ]);
@@ -127,7 +129,7 @@ class RegisterController extends Controller
                     $validator = Validator::make($input, [
                         'country' => 'required|exists:countrys,id',
                         'city' => 'required|exists:citys,id',
-                        'postal_code' => 'required'
+                        'postal_code' => 'postal_code:IN,FI,AU,US'
 
                     ]);
                                        
@@ -139,19 +141,23 @@ class RegisterController extends Controller
                     return response()->json(['error'=>$validator->errors()->all()]);
                 }
 
+                if($input['dataStep'] == 4 && $input['dataSequence'] == 3){
+                    //for email part
+                    $validator = Validator::make($input, [
+                         'birth_date'   => 'required|date|date_format:Y-m-d|before:13 years ago',
+                    ]);
+                                       
+                    if ($validator->passes()) {
+                        $this->storestepsvalue($request);
+                        return response()->json(['success'=>'Proceed to next Step','nxtDataStep'=>'5','nxtDataSeq'=>'3']);
+                    }
+
+                    return response()->json(['error'=>$validator->errors()->all()]);
+                }
+
             }
         }
 
-
-/*
-
-            if($input['dataStep'] == 4 && $input['dataSequence'] == 3){
-                //For fnam, lname, email, p hone email, pswd
-
-                $dataStep = 5;
-                $dataSequence = 3;
-            }
-*/
 
         return view('register',['country'=>$country,'city'=>$city]);        
        // return view('register',['dataStep'=>$dataStep,'dataSequence'=>$dataSequence]);        
@@ -164,7 +170,7 @@ class RegisterController extends Controller
         ->pluck('city_name','id');
         return response()->json($city);
     }
-
+ 
     private function storestepsvalue($request)
     {
         $input = $request->all();
@@ -176,5 +182,19 @@ class RegisterController extends Controller
 
         if($input['dataStep'] == 2 && $input['dataSequence'] == 3 && $input['identification'] != '')
             $request->session()->put('identification',$input['identification']);
+
+        if($input['dataStep'] == 3 && $input['dataSequence'] == 4){
+            if($input['country'] != '')
+                $request->session()->put('country',$input['country']);
+
+            if($input['city'] != '')
+                $request->session()->put('city',$input['city']);
+
+            if($input['postal_code'] != '')
+                $request->session()->put('postal_code',$input['postal_code']);
+        }
+
+        if($input['dataStep'] == 4 && $input['dataSequence'] == 3 && $input['birth_date'] != '')
+            $request->session()->put('birth_date',$input['birth_date']);
     }
 }

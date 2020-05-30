@@ -195,7 +195,7 @@
                           <div class="birth-step-element birth-day">
                             <div class="title">Day</div>
                             <div class="birth-selection">
-                              <input type="text" name="birth_day_step" placeholder="DD">
+                              <input type="text" name="frm_birthday" placeholder="DD" id="frm_birthday">
                             </div>
                             <div class="required-field">*Required</div>
                           </div>
@@ -203,7 +203,7 @@
                           <div class="birth-step-element birth-month">
                             <div class="title">Month</div>
                             <div class="birth-selection">
-                              <input type="text" name="birth_month_step" placeholder="MM">
+                              <input type="text" name="frm_birthmonth" placeholder="MM" id="frm_birthmonth">
                             </div>
                             <div class="required-field">*Required</div>
                           </div>
@@ -211,7 +211,7 @@
                           <div class="birth-step-element birth-year">
                             <div class="title">Year</div>
                             <div class="birth-selection">
-                              <input type="text" name="year" placeholder="YYYY">
+                              <input type="text" name="frm_birthyear" placeholder="YYYY" id="frm_birthyear">
                             </div>
                             <div class="required-field">*This field is required</div>
                           </div>
@@ -363,7 +363,7 @@
                             <div class="step-result place-result" data-show="3">
                               <div class="count"> 03</div>
                               <div class="selected-step">Place</div>
-                              <div class="description"><span>Chile4</span><span>Santiago4</span><span>Palermo3</span></div>
+                              <div class="description"><span>{{ Session::get('country') }}</span><span>{{ Session::get('city') }}</span><span>{{ Session::get('postal_code') }}</span></div>
                             </div>
                             <div class="step-result birth-result" data-show="4">
                               <div class="count"> 04</div>
@@ -387,6 +387,10 @@
     <input type="hidden" name="email" id="email">
     <input type="hidden" name="gender" id="gender">
     <input type="hidden" name="identification" id="identification">
+    <input type="hidden" name="country" id="country">
+    <input type="hidden" name="city" id="city">
+    <input type="hidden" name="postal_code" id="postal_code">
+    <input type="hidden" name="birth_date" id="birth_date">
 </form>          
         </section>
       </div>
@@ -396,29 +400,35 @@
 
     @include('layouts/footer-js')    
     <script type="text/javascript">
-        $('#country').change(function(){
+    cityDropdown();
+    function cityDropdown()
+    {
+        $('#countrySelect').change(function(){
         var countryID = $(this).val();    
+        var tokenCsrf = $('meta[name="csrf-token"]').attr('content');
         if(countryID){
             $.ajax({
                 type:"GET",
-                url:"{{url('citylist')}}?country_id="+countryID,
+                url:"{{url('citylist')}}?country_id="+countryID+"&_token="+tokenCsrf,
                 success:function(res){               
                 if(res){
-                    $("#city").empty();
-                    $("#city").append('<option>Select</option>');
+                   $("#citySelect").empty();
+                    $("#citySelect").append('<option>Select City</option>');
                     $.each(res,function(key,value){
-                      alert(key);
-                        $("#city").append('<option value="'+key+'">'+value+'</option>');
-                    });           
+                        $("#citySelect").append('<option value="'+key+'">'+value+'</option>');
+                    });   
+                    $("#citySelect").css("display", "block");        
                 }else{
-                    $("#city").empty();
+                    $("#citySelect").empty();
                   }
                 }
             });
-        }else{
-            $("#city").empty();
+        }
+        else{
+            $("#citySelect").empty();
         }      
-   });
+      });
+    }
     
 </script>
 
