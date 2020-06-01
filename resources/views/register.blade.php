@@ -139,28 +139,29 @@
                       <div class="group-of-steps-content">
                         <div class="info-step" data-step="5">
                           <div class="info-step-form">
+                            
                             <div class="info-step-form-content">
                               
                                 <div class="row">
                                   <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
                                     <div class="form-line">
-                                      <input type="text" class="form-item" name="first_name" placeholder="*First Name">
+                                      <input type="text" class="form-item" name="first_name" placeholder="*First Name" maxlength="50">
                                     </div>
                                   </div>
                                   <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
                                     <div class="form-line">
-                                      <input type="text" class="form-item" name="last_name" placeholder="*Last Name">
+                                      <input type="text" class="form-item" name="last_name" placeholder="*Last Name" maxlength="50">
                                     </div>
                                   </div>
                               
                                   <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                     <div class="form-line">
-                                      <input type="email" class="form-item" name="email" placeholder="Email">
+                                      <input type="email" class="form-item" name="email" value="{{ Session::get('email') }}" readonly>
                                     </div>
                                   </div>
                                   <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                     <div class="form-line">
-                                      <input type="tel" class="form-item" name="phone" placeholder="*Parent‘s Phone or E-mail">
+                                      <input type="tel" class="form-item" name="parent_phone_email" placeholder="*Parent‘s Phone or E-mail">
                                     </div>
                                   </div>
                                   <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -195,7 +196,7 @@
                           <div class="birth-step-element birth-day">
                             <div class="title">Day</div>
                             <div class="birth-selection">
-                              <input type="text" name="frm_birthday" placeholder="DD" id="frm_birthday">
+                              <input type="text" name="frm_birthday" placeholder="DD" id="frm_birthday" maxlength="2">
                             </div>
                             <div class="required-field">*Required</div>
                           </div>
@@ -203,7 +204,7 @@
                           <div class="birth-step-element birth-month">
                             <div class="title">Month</div>
                             <div class="birth-selection">
-                              <input type="text" name="frm_birthmonth" placeholder="MM" id="frm_birthmonth">
+                              <input type="text" name="frm_birthmonth" placeholder="MM" id="frm_birthmonth" maxlength="2">
                             </div>
                             <div class="required-field">*Required</div>
                           </div>
@@ -211,7 +212,7 @@
                           <div class="birth-step-element birth-year">
                             <div class="title">Year</div>
                             <div class="birth-selection">
-                              <input type="text" name="frm_birthyear" placeholder="YYYY" id="frm_birthyear">
+                              <input type="text" name="frm_birthyear" placeholder="YYYY" id="frm_birthyear" maxlength="4">
                             </div>
                             <div class="required-field">*This field is required</div>
                           </div>
@@ -363,7 +364,7 @@
                             <div class="step-result place-result" data-show="3">
                               <div class="count"> 03</div>
                               <div class="selected-step">Place</div>
-                              <div class="description"><span>{{ Session::get('country') }}</span><span>{{ Session::get('city') }}</span><span>{{ Session::get('postal_code') }}</span></div>
+                              <div class="description"><span>{{ Session::get('country_name') }}</span><span>{{ Session::get('city_name') }}</span><span>{{ Session::get('postal_code') }}</span></div>
                             </div>
                             <div class="step-result birth-result" data-show="4">
                               <div class="count"> 04</div>
@@ -388,7 +389,9 @@
     <input type="hidden" name="gender" id="gender">
     <input type="hidden" name="identification" id="identification">
     <input type="hidden" name="country" id="country">
+    <input type="hidden" name="country_name" id="country_name">
     <input type="hidden" name="city" id="city">
+    <input type="hidden" name="city_name" id="city_name">
     <input type="hidden" name="postal_code" id="postal_code">
     <input type="hidden" name="birth_date" id="birth_date">
 </form>          

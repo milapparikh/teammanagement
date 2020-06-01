@@ -155,6 +155,24 @@ class RegisterController extends Controller
                     return response()->json(['error'=>$validator->errors()->all()]);
                 }
 
+                if($input['dataStep'] == 5 && $input['dataSequence'] == 3){
+                    //for email part
+                    $validator = Validator::make($input, [
+                         'first_name'   => 'required|min:2|max:50',
+                         'last_name'   => 'required|min:2|max:50',
+                         'parent_phone_email'   => 'required|min:2|max:50',
+                         'password'   => 'required|min:2|max:50',
+                         'terms_conditions' => 'required'
+                    ]);
+                            
+
+                    if ($validator->passes()) {
+
+                    }
+
+                    return response()->json(['error'=>$validator->errors()->all()]);
+                }
+
             }
         }
 
@@ -174,6 +192,8 @@ class RegisterController extends Controller
     private function storestepsvalue($request)
     {
         $input = $request->all();
+
+
         if($input['dataStep'] == 1 && $input['dataSequence'] == 2 && $input['email'] != '')
             $request->session()->put('email',$input['email']);
 
@@ -184,6 +204,9 @@ class RegisterController extends Controller
             $request->session()->put('identification',$input['identification']);
 
         if($input['dataStep'] == 3 && $input['dataSequence'] == 4){
+
+            //print('<pre>');     print_r($input);
+
             if($input['country'] != '')
                 $request->session()->put('country',$input['country']);
 
@@ -192,6 +215,12 @@ class RegisterController extends Controller
 
             if($input['postal_code'] != '')
                 $request->session()->put('postal_code',$input['postal_code']);
+
+            if($input['country_name'] != '')
+                $request->session()->put('country_name',$input['country_name']);
+
+            if($input['city_name'] != '')
+                $request->session()->put('city_name',$input['city_name']);
         }
 
         if($input['dataStep'] == 4 && $input['dataSequence'] == 3 && $input['birth_date'] != '')

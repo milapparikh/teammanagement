@@ -217,14 +217,18 @@ jQuery(document).ready(function () {
 			$('#country').val($('#countrySelect').val());
 			$('#city').val($('#citySelect').val());
 			$('#postal_code').val($('#frmpostalcode').val());
-			alert($('#country :selected').text());
+
+			$('#country_name').val($('#countrySelect option:selected').text());
+			$('#city_name').val($('#citySelect option:selected').text());
+
 			$("#regStepFrm").submit();
 		}
 		else if(bodyStep == 4){
-			alert($('#frm_birthday').val());
-			alert($('#frm_birthmonth').val());
-			alert($('#frm_birthyear').val());
-
+			$('#dataStep').val(4);
+			$('#dataSequence').val(3);
+			bdate = $('#frm_birthyear').val()+'-'+$('#frm_birthmonth').val()+'-'+$('#frm_birthday').val();
+			$('#birth_date').val(bdate);
+			$("#regStepFrm").submit();
 		}
 		else
 			changeStep(bodyStep , ++bodyStep);

@@ -65,9 +65,9 @@
                               <button class="btn" type="submit" value="Submit">Log In <span
                                   class="icon icomoon icon-arrow-right4"></span></button>
                             </div>
-                          </div>
+                          </div> 
                           <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                            <p class="account-question">Don‘t have an account? <a href="{{url('registration')}}" class="link go-to-register">Register</a>!</p>
+                            <p class="account-question">Don‘t have an account? <a href="{{url('register')}}" class="link">Register</a>!</p>
                           </div>
                         </div>
                       </form>
