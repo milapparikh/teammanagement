@@ -140,6 +140,7 @@
                         <div class="info-step" data-step="5">
                           <div class="info-step-form">
                             
+                            <form action="{{url('register')}}" method="POST" id="regFinalStepFrm">
                             <div class="info-step-form-content">
                               
                                 <div class="row">
@@ -156,7 +157,7 @@
                               
                                   <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                     <div class="form-line">
-                                      <input type="email" class="form-item" name="email" value="{{ Session::get('email') }}" readonly>
+                                      <input type="email" class="form-item" name="confirmemail" value="{{ Session::get('email') }}" readonly>
                                     </div>
                                   </div>
                                   <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -166,7 +167,7 @@
                                   </div>
                                   <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                     <div class="form-line form-line-with-icon">
-                                      <input type="password" class="form-item form-item-password" name="password" value="*Password">
+                                      <input type="password" class="form-item form-item-password" name="password">
                                       <span class="icon icomoon icon-eye2 see-password"></span>
                                     </div>
                                   </div>
@@ -183,12 +184,13 @@
 
                                   <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                     <div class="form-line form-line-submit">
-                                      <button class="btn" type="button" value="Submit" data-sound-click="sonidoB">Finish <span class="icon icomoon icon-arrow-right4"></span></button>
+                                      <button class="btn" type="button" value="Submit" onClick="submitFinalStep();">Finish <span class="icon icomoon icon-arrow-right4"></span></button>
                                     </div>
                                   </div>
                                 </div>
                              
                             </div>
+                          </form>
                           </div>
                         </div>
 
@@ -369,7 +371,7 @@
                             <div class="step-result birth-result" data-show="4">
                               <div class="count"> 04</div>
                               <div class="selected-step">Birth</div>
-                              <div class="description"><span>12/02/2000</span></div>
+                              <div class="description"><span>{{ Session::get('birth_date') }}</span></div>
                             </div>
                           </div>
                         </div>
@@ -431,6 +433,14 @@
             $("#citySelect").empty();
         }      
       });
+    }
+
+    function submitFinalStep()
+    {
+        $('#dataStep').val(5);
+        $('#dataSequence').val(3);
+
+        $("#regFinalStepFrm").submit();
     }
     
 </script>

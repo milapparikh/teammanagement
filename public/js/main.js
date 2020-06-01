@@ -234,6 +234,40 @@ jQuery(document).ready(function () {
 			changeStep(bodyStep , ++bodyStep);
     });
 
+	$("#regFinalStepFrm").submit(function(e)
+	{
+	    //var postData = $(this).serializeArray();
+	    var postData = $("#regFinalStepFrm, #regStepFrm").serializeArray();
+	    var formURL = $(this).attr("action");
+	    $.ajax(
+	    {
+	        url : formURL,
+	        type: "POST",
+	        data : postData,
+	        success:function(data, textStatus, jqXHR) 
+	        {
+	            //data: return data from server
+	            //alert('data');
+	          
+	        	if(data.error){
+	            	printErrorMsg(data.error);
+	        	}
+	            else{	
+	            	removeErrorMsg();	            	
+	            	
+	            }
+	        },
+	        error: function(jqXHR, textStatus, errorThrown) 
+	        {
+	            //if fails
+	            //alert('fails');    
+	        }
+	    });
+	    e.preventDefault(); //STOP default action
+	    //e.unbind(); //unbind. to stop multiple form submit.
+	});
+	
+
 
 	function changeStep(oldStep , newStep) {
 		var body       = jQuery("body"),

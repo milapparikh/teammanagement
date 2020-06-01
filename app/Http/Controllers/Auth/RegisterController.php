@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\User;
+use App\Userdetail;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -168,12 +169,41 @@ class RegisterController extends Controller
 
                     if ($validator->passes()) {
 
+                            $oUsers = User::create([
+                                'name' => $input['first_name'].' '.$input['last_name'],
+                                'email' => $input['email'],
+                                'role_id' => 2,
+                                'password' => Hash::make($input['password']),
+                            ]);
+
+                            $oUsers = Userdetail::create([
+                                'user_id' => $oUsers->id,
+                                'country_id' => $input['country'],
+                                'city_id' => $input['city'],
+                                'first_name' => $input['first_name'],
+                                'last_name' => $input['last_name'],
+                                'gender' => $input['gender'],
+                                'identification' => $input['identification'],
+                                'postal_code' => $input['postal_code'],
+                                'parent_phone_email' => $input['parent_phone_email'],
+                                'birth_date' => $input['birth_date'],
+                            ]);
+
+                            echo "successfully logged in";
+                            exit;
+
+
                     }
 
                     return response()->json(['error'=>$validator->errors()->all()]);
                 }
 
             }
+        }
+        else
+        {
+            //if($request->isMethod('get'))
+             //   $request->session()->flush();
         }
 
 

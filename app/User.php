@@ -63,4 +63,13 @@ class User extends Authenticatable
     {
         return $this->hasOne('App\Team','created_by_user_id', 'id');
     }
+
+    /**
+     * Get the phone record associated with the user.
+     */
+    public function userdetail()
+    {
+        return $this->hasOne('App\Userdetail');
+
+    }    
 }
