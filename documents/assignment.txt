@@ -1,0 +1,38 @@
+1. Configure Facebook, Twitter account in laravel and show all posts in page with pagination.
+-----------------------------------------
+
+2. Create following rest api in laravel.
+-----------------------------------------
+Api Name: createTeam
+Type: POST
+Request:
+{
+	"user_id":"",
+	"team_name":"",
+	"team_player":[
+		{
+			"player_name":"",
+			"player_email":""
+		}
+	]
+}
+ 
+Response:
+{
+	"success":true,
+	"code":200,
+	"message":"",
+	"result":{"team_id":""}//send team id of recently created team.
+}
+
+Api Name: getTeamInfo
+Type: GET
+Request:{
+	"user_id":""
+}
+Response: Return all team and player details created by this user.
+
+3. Configure the HTML(download from the below link)  pages in laravel and complete the functionality.
+-----------------------------------------
+Kindly download the HTML pages from below google drive link.
+https://drive.google.com/file/d/1630N9PiU6Ee8GtQzxpXL6yQ0POrv9sOD/view?usp=sharing
